@@ -44,14 +44,18 @@ module.exports = userController = {
     }
   },
   login: async (req, res) => {
-    const { email, password } = req.body;
+    const { UserName, password } = req.body;
     try {
-      const searchResult = await User.findOne({ email });
+      const searchResult = await User.findOne({ UserName });
       if (!searchResult)
-        return res.status(400).json([{ msg: "email or password incorrect" }]);
+        return res
+          .status(400)
+          .json([{ msg: "UserName or password incorrect" }]);
       const isMatch = await bcrypt.compare(password, searchResult.password);
       if (!isMatch)
-        return res.status(400).json([{ msg: "email or password incorrect" }]);
+        return res
+          .status(400)
+          .json([{ msg: "UserName or password incorrect" }]);
       const paylaod = {
         id: searchResult._id,
       };
