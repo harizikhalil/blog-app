@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { login } from "../../redux/actions/authAction";
-
-const Login = () => {
+import userIcon from "../../img/user-icon.jpg";
+import "./authform.css";
+const Login = ({ history }) => {
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.authReducer.isAuth);
   const [formData, setForm] = useState({
     UserName: "",
     password: "",
@@ -14,21 +17,20 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // login
 
     dispatch(login(formData));
-    //redirect to dashboard
-    // history.push("/dashboard");
+    history.push("/blog");
   };
 
-  /*if (isAuth) {
-    return <Redirect to="/dashboard" />;
-  }*/
+  if (isAuth) {
+    return <Redirect to="/blog" />;
+  }
   return (
     <React.Fragment>
-      <div className="login-session">
-        <div className="contact_container">
-          <form className="login-form" onSubmit={handleSubmit}>
+      <div className="form-session">
+        <div className="form_container">
+          <img src={userIcon} alt="icon-user" />
+          <form className="form-body" onSubmit={handleSubmit}>
             <div className="form-header"></div>
             <input
               type="text"
@@ -50,7 +52,7 @@ const Login = () => {
               required
             />
             <br />
-            <input type="submit" value="Login" className="btn" />
+            <input type="submit" value="Login" className="btn-form" />
           </form>
         </div>
       </div>

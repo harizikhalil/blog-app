@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "../../../node_modules/react-quill/dist/quill.snow.css";
 
-const AddPost = () => {
+const AddPost = ({ history }) => {
   const user = useSelector((state) => state.authReducer.user);
   const [body, setBody] = useState("");
   const [formData, setForm] = useState({
@@ -33,6 +33,9 @@ const AddPost = () => {
       await axios.post("/api/blog/addPost", data);
 
       alert("post ajouter");
+      setTimeout(() => {
+        history.push("/blog");
+      }, 2000);
     } catch (error) {
       const response = error.response.data;
       if (Array.isArray(response)) {
@@ -50,24 +53,28 @@ const AddPost = () => {
     setForm({ ...formData, [e.target.name]: e.target.value });
   return (
     <div>
-      <span>Title</span>
-      <input
-        type="text"
-        placeholder="add title"
-        name="title"
-        onChange={handleChange}
-        value={formData.title}
-      />
-      <br />
-      <span>Description</span>
-      <input
-        type="text"
-        placeholder="add description"
-        name="description"
-        onChange={handleChange}
-        value={formData.description}
-      />
-      <br />
+      <div className="form-input">
+        <p>Title</p>
+        <input
+          type="text"
+          placeholder="add title"
+          className="input_text text-back"
+          name="title"
+          onChange={handleChange}
+          value={formData.title}
+        />
+        <br />
+        <p>Description</p>
+        <input
+          type="text"
+          className="input_text text-back"
+          placeholder="add description"
+          name="description"
+          onChange={handleChange}
+          value={formData.description}
+        />
+        <br />
+      </div>
       <ReactQuill
         placeholder="write something"
         onEditorChange={onEditorChange}

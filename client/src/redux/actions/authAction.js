@@ -1,6 +1,5 @@
 import axios from "axios";
-//import { toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+
 import {
   LOGIN_USER_SUCCESS,
   REGISTER_USER_SUCCESS,
@@ -51,18 +50,8 @@ export const register = (formData) => async (dispatch) => {
       payload: res.data, // { user : {name , lastName , ... }}
     });
   } catch (error) {
-    //response is the error array from the server
     const response = error.response.data;
-    // check if the response is an array and alert it
-    /* if (Array.isArray(response)) {
-      response.forEach((err) => {
-        toast.warn(err.msg, {
-          className: "error-toast",
-          draggable: true,
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      });
-    }*/
+
     console.log(response);
     dispatch({
       type: REGISTER_USER_FAIL,

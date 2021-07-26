@@ -56,4 +56,17 @@ module.exports = blogController = {
         res.status(200).json({ success: true, blogs });
       });
   },
+  getPostById: async (req, res) => {
+    const { idPost } = req.params;
+    try {
+      const post = await Blog.findById(idPost).populate("writer");
+      if (!post) {
+        return res.status(404).json({ msg: "post not found" });
+      }
+
+      res.send({ post });
+    } catch (error) {
+      res.status(500).json({ errors: error });
+    }
+  },
 };

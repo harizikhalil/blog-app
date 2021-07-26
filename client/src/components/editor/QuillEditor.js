@@ -49,7 +49,6 @@ class Clipboard extends QuillClipboard {
           .catch((error) => console.error(error));
       });
     } else {
-      //console.log('when to use this') 보통 다른 곳에서  paste 한다음에  copy하면 이쪽 걸로 한다.
       super.onPaste(e);
     }
   }
@@ -76,35 +75,6 @@ ImageBlot.blotName = "image";
 ImageBlot.tagName = "img";
 Quill.register(ImageBlot);
 
-/*class PollBlot extends BlockEmbed {
-  static create(value) {
-    const prefixTag = document.createElement("span");
-    prefixTag.innerText = "투표 - ";
-
-    const bTag = document.createElement("b");
-    bTag.innerText = value.title;
-
-    const node = super.create();
-    node.setAttribute("id", value.id);
-    node.appendChild(prefixTag);
-    node.appendChild(bTag);
-
-    return node;
-  }
-
-  static value(node) {
-    const id = node.getAttribute("id");
-    const bTag = node.querySelector("b");
-    const title = bTag.innerText;
-    return { id, title };
-  }
-}
-
-PollBlot.blotName = "poll";
-PollBlot.tagName = "p";
-PollBlot.className = "poll-inner-post";
-Quill.register(PollBlot);
-*/
 class QuillEditor extends React.Component {
   bandId;
   placeholder;
@@ -146,7 +116,6 @@ class QuillEditor extends React.Component {
     );
   };
 
-  // I V F P들을  눌렀을떄 insertImage: this.imageHandler로 가서  거기서 inputOpenImageRef를 클릭 시킨다.
   imageHandler = () => {
     this.inputOpenImageRef.current.click();
   };
@@ -176,8 +145,6 @@ class QuillEditor extends React.Component {
           let range = quill.getSelection();
           let position = range ? range.index : 0;
 
-          //먼저 노드 서버에다가 이미지를 넣은 다음에   여기 아래에 src에다가 그걸 넣으면 그게
-          //이미지 블롯으로 가서  크리에이트가 이미지를 형성 하며 그걸 발류에서     src 랑 alt 를 가져간후에  editorHTML에 다가 넣는다.
           quill.insertEmbed(position, "image", {
             src: "http://localhost:5000/" + response.data.url,
             alt: response.data.fileName,
@@ -204,7 +171,7 @@ class QuillEditor extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ width: "80%", margin: "0 auto" }}>
         <div id="toolbar">
           <select
             className="ql-header"
@@ -252,7 +219,6 @@ class QuillEditor extends React.Component {
     //syntax: true,
     toolbar: {
       container: "#toolbar",
-      //id ="toorbar"는  그 위에 B I U S I V F P 이거 있는 곳이다.
       handlers: {
         insertImage: this.imageHandler,
       },
